@@ -1,0 +1,68 @@
+{% load static %}
+<html>
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+</head>
+
+<body style="background-color: #3b2b30; 
+background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);">
+    <div class="cntr">
+        <div class="cntr-innr">
+            <h1>Search McGill Averages</h1>
+            <label class="search" for="inpt_search">
+                <form method="POST" action="/search/">
+                    {% csrf_token %}
+                    <input id="inpt_search" class="search-bar" type="search" autocomplete="off" name="srh">
+                </form>
+            </label>
+            <p>Enter course code above.</p>
+            <div style="text-align: center;">
+                {% if messages %}
+                <ul class="messages">
+                    {% for k in messages %}
+                    {{ k }}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            <div>
+                {% if sr %}
+                <div id="css-only-modals">
+                    <input id="modal1" class="css-only-modal-check" type="checkbox" checked />
+                    <div class="css-only-modal">
+                        <label for="modal1" class="css-only-modal-close"><i class="fa fa-times fa-2x"></i></label>
+
+                        <div class="rwd-table" style="text-align: center;">
+                            <h3>{{ name }}</h3>
+                            <h3>{{ credits }} Credits</h3>
+                            <h3><a href="https://www.mcgill.ca/study/2020-2021/courses/{{ cal_code }}">Homepage</a></h3>
+                        </div><br>
+
+                        <table class="rwd-table">
+                            <tr>
+                                <th>Term</th>
+                                <th>Average (GPA)</th>
+                                <th>Average (Grade)</th>
+                            </tr>
+                            {% for k in sr %}
+                            <tr>
+                                <td data-th="Term">{{ k.term }}</td>
+                                <td data-th="Average (GPA)">{{ k.num_average }}</td>
+                                <td data-th="Average (Grade)">{{ k.average }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <label for="modal1" class="css-only-modal-btn btn btn-primary btn-lg">Okay</label>
+                    </div>
+                    <div id="screen-shade"></div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="{% static 'js/script.js' %}"></script>
+</html>

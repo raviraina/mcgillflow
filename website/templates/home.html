@@ -1,0 +1,13 @@
+<center><h1>Courses</h1></center>
+
+{% for item in all %}
+    <div style="text-align: center;">
+    Course: {{ item.course }}<br/>
+    Term: {{ item.term }}<br/>
+    Letter Average: {{ item.average}}<br/>
+    Number Average: {{ item.num_average }}<br/>
+    Credits: {{ item.num_credit }}<br/>
+    <br/>
+    <hr/>
+    </div>
+{% endfor %}
